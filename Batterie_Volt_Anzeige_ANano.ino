@@ -14,11 +14,11 @@ String volt_s;
 String voltBerechnet(int v_in)
 {
   //Alle Konstanten als double definiert damit beim Rechnen int nicht mit float kollidiert.
-  const double BEREICH    = 1024.0;                //Der Bereich von 0 - 1023 sind 1024 Werte.
-  const double R1         = 9950.0;                //Gemessener Wiederstandswert von R1.
-  const double R2         = 998.0;                 //Gemessener Wiederstandswert von R2.
-  const double V_MAX      = 5.0;                   //Maximale Spannung die an einem Arduino Nano Analog Pin anliegen darf. 
-  const double AADC       = 0.5;                   //Korrektur des Arduino ADC Fehlers https://skillbank.co.uk/arduino/adc.htm für eine ausführliche Erklärung.
+  const double BEREICH    = 1024.0;                // Der Bereich von 0 - 1023 sind 1024 Werte.
+  const double R1         = 9950.0;                // Gemessener Wiederstandswert von R1.
+  const double R2         = 998.0;                 // Gemessener Wiederstandswert von R2.
+  const double V_MAX      = 5.0;                   // Maximale Spannung die an einem Arduino Nano Analog Pin anliegen darf. 
+  const double AADC       = 0.5;                   // Korrektur des Arduino ADC Fehlers https://skillbank.co.uk/arduino/adc.htm für eine ausführliche Erklärung.
     
   
   float volt_in = (v_in * V_MAX + AADC) / BEREICH; // Umrechnen von dem Bereichswert in die Spannung die an A0 anliegt.
