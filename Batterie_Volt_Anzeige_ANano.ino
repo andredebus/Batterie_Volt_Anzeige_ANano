@@ -10,6 +10,8 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 int v_in = 0;
 String volt_s; 
+bool serialSent = false;
+
 
 String voltBerechnet(int v_in)
 {
@@ -50,6 +52,7 @@ String voltBerechnet(int v_in)
 
 void setup() 
 {
+  Serial.begin(115200);
   display.begin(0x3C);
   delay(1000);
   display.clearDisplay();
@@ -57,13 +60,47 @@ void setup()
 }
  
 void loop() {
+  
+  /*Serielle Schnittstelle überwachen und bei Übertragung des char 1 von aussen den Boolwert
+    auf der Variablen serialSent ändern*/
+  
+  while ( Serial.available() > 0 ) 
+    
+    {
+            
+      if( Serial.readString() == "1" );
+      
+      {
+        
+        serialSent = !serialSent;
+        Serial.flush();      
+        
+        }    
+    
+    }   
+  
+  //Wert am pin A0 abfragen und an die voltBerechnet Funktion übergeben
   v_in    = analogRead(V_IN);      
   volt_s  = voltBerechnet(v_in);
-  delay(1000);
+  
+  
+  //Display Ausgabe
   display.setFont(&FreeMonoBold18pt7b);
   display.setTextColor(WHITE);
   display.setCursor(0,28);
   display.println(volt_s);
   display.display();
   display.clearDisplay();
+
+  // Serielle Ausgabe
+  if ( serialSent == true )
+    
+    {
+      
+      Serial.print(volt_s);
+      
+    }
+
+  delay(1000);
+
 }
